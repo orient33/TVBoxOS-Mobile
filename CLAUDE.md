@@ -24,11 +24,13 @@ TVBoxOS-Mobile (MBox) — Android TV/移动端视频聚合播放器，基于 TVB
 
 ## Architecture
 
-### Module Structure (6 modules)
+### Module Structure (8 modules)
 
 - **app**: 主应用模块
 - **player**: 播放器封装（IJK、ExoPlayer）
 - **quickjs**: QuickJS JavaScript 引擎，用于 JS Spider 执行
+- **catvod**: 基础模块，包含 Spider 基类、Proxy 工具类
+- **chaquo**: Python 解析模块，使用 Chaquopy 运行 Python Spider
 - **TabLayout**: 自定义 Tab 组件
 - **ViewPager1Delegate**: ViewPager 代理
 - **crash**: 崩溃处理模块（CustomActivityOnCrash）
@@ -56,7 +58,10 @@ TVBoxOS-Mobile (MBox) — Android TV/移动端视频聚合播放器，基于 TVB
 
 ### Key Patterns
 
-- **Spider 插件架构**: 抽象 `Spider` 类支持 JAR 动态加载（`JarLoader` + DexClassLoader）和 JS 执行（`JsLoader` + QuickJS），运行时无需重编译
+- **Spider 插件架构**: 抽象 `Spider` 类支持三种加载方式，运行时无需重编译
+  - JAR: `JarLoader` + DexClassLoader（.jar 文件）
+  - JS: `JsLoader` + QuickJS（.js 文件）
+  - Python: `PyLoader` + Chaquopy（.py 文件，Python 3.12）
 - **MVVM**: ViewModel + LiveData，通过 EventBus 跨组件通信
 - **单例**: ApiConfig 管理全局视频源配置，AppDataManager 管理数据访问
 - **Room 数据库**: 实体包括 Cache、VodRecord（观看历史）、VodCollect（收藏）
@@ -67,6 +72,7 @@ TVBoxOS-Mobile (MBox) — Android TV/移动端视频聚合播放器，基于 TVB
 - **网络**: OkHttp 3.12.11、OkGo 3.0.4、NanoHTTPD 2.3.1
 - **数据**: Gson 2.8.7、Room 2.3.0、Hawk 2.0.1、Jsoup 1.14.1
 - **UI**: Material 1.4.0、XPopup 2.10.0、Lottie 5.2.0、TV RecyclerView 3.0.0
+- **Python**: Chaquopy 17.0.0、Python 3.12、lxml、pyquery、requests、pycryptodome、beautifulsoup4
 - **特殊**: DLNA-Cast（投屏）、ZXing（二维码）、Conscrypt（TLS）、Thunder.jar（迅雷协议）
 
 ## Build Configuration

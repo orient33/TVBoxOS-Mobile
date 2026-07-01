@@ -7,6 +7,7 @@ import android.util.Base64;
 
 import com.github.catvod.crawler.JarLoader;
 import com.github.catvod.crawler.JsLoader;
+import com.github.catvod.crawler.PyLoader;
 import com.github.catvod.crawler.Spider;
 import com.github.tvbox.osc.base.App;
 import com.github.tvbox.osc.bean.LiveChannelGroup;
@@ -67,6 +68,7 @@ public class ApiConfig {
 
     private JarLoader jarLoader = new JarLoader();
     private JsLoader jsLoader = new JsLoader();
+    private PyLoader pyLoader = new PyLoader();
 
     private String userAgent = "okhttp/3.15";
 
@@ -653,11 +655,19 @@ public class ApiConfig {
 
     public Spider getCSP(SourceBean sourceBean) {
         boolean js = sourceBean.getApi().endsWith(".js") || sourceBean.getApi().contains(".js?");
+        boolean py = sourceBean.getApi().endsWith(".py") || sourceBean.getApi().contains(".py?");
         if (js) return jsLoader.getSpider(sourceBean.getKey(), sourceBean.getApi(), sourceBean.getExt(), sourceBean.getJar());
+        if (py) return pyLoader.getSpider(sourceBean.getKey(), sourceBean.getApi(), sourceBean.getExt());
         return jarLoader.getSpider(sourceBean.getKey(), sourceBean.getApi(), sourceBean.getExt(), sourceBean.getJar());
     }
 
     public Object[] proxyLocal(Map param) {
+        try {
+            Object[] result = pyLoader.proxy(param);
+            if (result != null) return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return jarLoader.proxyInvoke(param);
     }
 

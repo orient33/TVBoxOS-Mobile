@@ -69,6 +69,7 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
+        coreLibraryDesugaringEnabled true
     }
 
     kotlinOptions {
@@ -87,6 +88,8 @@ android {
 
 dependencies {
     api fileTree(dir: "libs", include: ['*.jar', '*.aar'])
+
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 
     implementation 'com.google.android.material:material:1.4.0'
 
@@ -121,6 +124,7 @@ dependencies {
 
     implementation project(":player")
     implementation project(":quickjs")
+    implementation project(":catvod")
     implementation 'net.sourceforge.streamsupport:android-retrofuture:1.7.4'
 
     implementation 'com.lzy.net:okgo:3.0.4'
@@ -162,6 +166,8 @@ dependencies {
     implementation project(":crash")
     //dlna投屏 - temporarily disabled due to JitPack resolution issue
     //implementation 'com.github.devin1014.DLNA-Cast:dlna-dmc:V1.0.0'
+    //python解析
+    implementation project(":chaquo")
     // Lifecycles only (without ViewModel or LiveData)
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
 }
