@@ -1,14 +1,19 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 30
+    namespace 'cat.ereza.customactivityoncrash'
+    compileSdk 33
     resourcePrefix 'customactivityoncrash_'
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 30
+        minSdk 24
+        targetSdk 30
     }
-    namespace 'cat.ereza.customactivityoncrash'
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
 }
 
 ext {

@@ -2,12 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
-    compileSdkVersion 33
+    namespace 'com.github.tvbox.osc'
+    compileSdk 33
 
     defaultConfig {
         applicationId 'com.github.tvbox.osc'
-        minSdkVersion 24
-        targetSdkVersion 30
+        minSdk 24
+        targetSdk 30
         versionCode 31
         versionName '1.1.1'
         multiDexEnabled true
@@ -38,22 +39,25 @@ android {
         }
     }
 
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
+    packaging {
+        resources {
+            excludes += ['META-INF/DEPENDENCIES', 'META-INF/beans.xml']
+        }
     }
 
     signingConfigs {
         config {
             keyAlias 'TVBoxOSC'
             keyPassword 'TVBoxOSC'
-            storeFile file('..\\TVBoxOSC.jks')
+            storeFile file('../TVBoxOSC.jks')
             storePassword 'TVBoxOSC'
         }
     }
 
     buildTypes {
         debug {
-            signingConfig signingConfigs.config
+            // Use default debug signing config
+            signingConfig signingConfigs.debug
         }
 
         release {
@@ -63,26 +67,21 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
-    lintOptions {
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+
+    lint {
         checkReleaseBuilds false
         abortOnError false
     }
-    dexOptions {
-        javaMaxHeapSize "4g"
-        additionalParameters += '--multi-dex'
-        additionalParameters += '--set-max-idx-number=48000'
-        additionalParameters += '--minimal-main-dex'
-    }
+
     buildFeatures {
         viewBinding true
-    }
-
-    packagingOptions {//引入dlna-cast时的文件冲突
-        exclude 'META-INF/beans.xml'
     }
 }
 
@@ -91,7 +90,7 @@ dependencies {
 
     implementation 'com.google.android.material:material:1.4.0'
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.5.31"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.6.0'
 
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
@@ -161,8 +160,8 @@ dependencies {
     implementation 'com.hyman:flowlayout-lib:1.1.2'
     //崩溃
     implementation project(":crash")
-    //dlna投屏
-    implementation 'com.github.devin1014.DLNA-Cast:dlna-dmc:V1.0.0'
+    //dlna投屏 - temporarily disabled due to JitPack resolution issue
+    //implementation 'com.github.devin1014.DLNA-Cast:dlna-dmc:V1.0.0'
     // Lifecycles only (without ViewModel or LiveData)
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
 }
