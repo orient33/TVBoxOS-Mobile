@@ -1,10 +1,5 @@
 # TVBoxMobile
 
-基于
-* [q215613905](https://github.com/q215613905)/[TVBoxOS](https://github.com/q215613905/TVBoxOS)
-
-本仓库以 `origin/main` 为上游基线，当前 fork 在此基础上增加了构建升级和 Python 解析支持相关修改。
-
 ## Build
 
 [Github Actions](https://github.com/XiaoRanLiu3119/MBox-Build/actions)
@@ -70,9 +65,15 @@ Python 解析依赖：
    - 更新 `ApiConfig#getCSP()`，按扩展名支持 `.py` 源。
    - 新增 `UriUtil`，用于资源路径和 URI 处理。
 
+## fork 自 https://github.com/XiaoRanLiu3119/TVBoxOS-Mobile
+
+基于 * [q215613905](https://github.com/q215613905)/[TVBoxOS](https://github.com/q215613905/TVBoxOS)
+
+本仓库以 `origin/main` 为上游基线，当前 fork 在此基础上增加了构建升级和 Python 解析支持相关修改。
+
 精力有限，未必会及时维护，仅用于学习。
 
 ## 推荐使用
 
-[takagen99](https://github.com/takagen99/Box)
-[FongMi](https://github.com/FongMi/TV)
+- [takagen99](https://github.com/takagen99/Box)
+- [FongMi](https://github.com/FongMi/TV)
